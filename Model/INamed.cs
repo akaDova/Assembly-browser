@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Class1
+    interface INamed
     {
+        string Name
+        {
+            get;
+        }
     }
 }
