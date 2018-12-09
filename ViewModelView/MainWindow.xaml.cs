@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace View
+namespace ViewModelView
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
