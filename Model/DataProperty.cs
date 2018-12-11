@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class DataProperty : ITyped
+    public class DataProperty : ITyped, IData
     {
         public string Name
         {
@@ -17,6 +17,13 @@ namespace Model
         {
             get;
         }
+
+        public string ItemName
+        {
+            get => $"{OwnType} {Name}";
+        }
+
+        public IEnumerable<IData> Nodes => null;
 
         public DataProperty()
         {

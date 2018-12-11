@@ -7,17 +7,27 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class DataType : INamed
+    public class DataType : INamed, IData
     {
         public string Name
         {
             get;
         }
 
-        public readonly List<DataField> fields;
-        public readonly List<DataProperty> properties;
-        public readonly List<DataMethod> methods;
-        
+        public  List<DataField> fields;
+        public  List<DataProperty> properties;
+        public  List<DataMethod> methods;
+
+        public string ItemName
+        {
+            get => Name;
+        }
+
+        public IEnumerable<IData> Nodes
+        {
+            get;
+        }
+
         public DataType()
         {
 
@@ -26,26 +36,32 @@ namespace Model
         public DataType(Type type)
         {
             Name = type.Name;
-
-            FieldInfo[] fieldsInfo = type.GetFields();
+            TypeInfo typeInfo = type.GetTypeInfo();
+            //FieldInfo[] fieldsInfo = typeInfo.DeclaredFields;
 
             fields = (
-                from field in type.GetFields()
+                from field in typeInfo.DeclaredFields
                 select new DataField(field) into dataField
                 select dataField
             ).ToList();
 
+
             properties = (
-                from property in type.GetProperties()
+                from property in typeInfo.DeclaredProperties
                 select new DataProperty(property) into dataProperty
                 select dataProperty
             ).ToList();
 
             methods = (
-                from method in type.GetMethods()
-                select new DataMethod(method) into dataMethod
-                select dataMethod
-            ).ToList();
+                 from method in typeInfo.DeclaredMethods
+                 select new DataMethod(method) into dataMethod
+                 select dataMethod
+             ).ToList();
+
+            Nodes = ((IEnumerable<IData>)fields).Concat(properties)
+                          .Concat(methods);
+                
+                
         }
     }
 }

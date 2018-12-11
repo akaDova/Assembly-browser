@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class DataNamespace : INamed
+    public class DataNamespace : INamed, IData
     {
        
 
@@ -15,6 +15,13 @@ namespace Model
             get;
         }
 
+        public string ItemName
+        {
+            get => Name;
+        }
+
+        public IEnumerable<IData> Nodes => types;
+       
         public readonly List<DataType> types;
 
         public DataNamespace(string name, List<Type> types)

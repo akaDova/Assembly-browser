@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class DataMethod : ITyped
+    public class DataMethod : ITyped, IData
     {
         public string Name
         {
@@ -19,6 +20,15 @@ namespace Model
         {
             get;
         }
+
+        public string ItemName
+        {
+            get => $"{OwnType} {Name}";
+        }
+
+        
+
+        public IEnumerable<IData> Nodes => null;
 
         public DataMethod()
         {
@@ -42,7 +52,7 @@ namespace Model
                 select paramSignatureText
              ).ToList();
 
-            OwnType = $"{method.ReturnType.Name} ({string.Join(", ", signature)})";
+            OwnType = $"({string.Join(", ", signature)}) => {method.ReturnType.Name}";
 
             Name = method.Name;
 

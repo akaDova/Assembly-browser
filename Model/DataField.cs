@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class DataField : ITyped
+    public class DataField : ITyped, IData
     {
         public string Name
         {
@@ -17,6 +17,13 @@ namespace Model
         {
             get;
         }
+
+        public string ItemName
+        {
+            get => $"{OwnType} {Name}";
+        }
+
+        public IEnumerable<IData> Nodes => null;
 
         public DataField()
         {
@@ -33,6 +40,7 @@ namespace Model
         {
             Name = field.Name;
             OwnType = field.FieldType.Name;
+            
         }
     }
 }
