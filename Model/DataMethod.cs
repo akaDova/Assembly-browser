@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    class DataMethod : INamed
+    public class DataMethod : ITyped
     {
         public string Name
         {
             get;
         }
-        public string Signature
+
+        // also known as signature
+        public string OwnType
         {
             get;
         }
@@ -26,7 +28,7 @@ namespace Model
         public DataMethod(string name, string signature)
         {
             Name = name;
-            Signature = signature;
+            OwnType = signature;
         }
 
         public DataMethod(MethodInfo method)
@@ -40,7 +42,7 @@ namespace Model
                 select paramSignatureText
              ).ToList();
 
-            Signature = $"{method.ReturnType.Name} ({string.Join(", ", signature)})";
+            OwnType = $"{method.ReturnType.Name} ({string.Join(", ", signature)})";
 
             Name = method.Name;
 

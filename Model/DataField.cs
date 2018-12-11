@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    class DataField : INamed
+    public class DataField : ITyped
     {
         public string Name
         {
             get;
         }
-        public string ReturnType
+        public string OwnType
         {
             get;
         }
@@ -23,16 +23,16 @@ namespace Model
 
         }
 
-        public DataField(string name, string returnType)
+        public DataField(string name, string type)
         {
             Name = name;
-            ReturnType = returnType;
+            OwnType = type;
         }
 
         public DataField(FieldInfo field) : this(field.Name, field.FieldType.Name)
         {
             Name = field.Name;
-            ReturnType = field.FieldType.Name;
+            OwnType = field.FieldType.Name;
         }
     }
 }

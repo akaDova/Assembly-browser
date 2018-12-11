@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    class DataProperty : INamed
+    public class DataProperty : ITyped
     {
         public string Name
         {
             get;
         }
-        public string ReturnType
+        public string OwnType
         {
             get;
         }
@@ -23,17 +23,16 @@ namespace Model
 
         }
 
-        public DataProperty(string name, string returnType)
+        public DataProperty(string name, string type)
         {
             Name = name;
-            ReturnType = returnType;
+            OwnType = type;
         }
 
         public DataProperty(PropertyInfo property)
         {
             Name = property.Name;
-            ReturnType = property.PropertyType.Name;
-
+            OwnType = property.PropertyType.Name;
         }
     }
 }
