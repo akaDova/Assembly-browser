@@ -30,6 +30,19 @@ namespace Model
 
         }
 
+        private string GetTypeName(Type type)
+        {
+            string typeName = type.Name;
+            if (type.IsGenericType)
+            {
+                List<string> args = (from arg in type.GetGenericArguments()
+                                     select arg.Name).ToList();
+                typeName = $"{typeName}<{string.Join(",", args)}>";
+
+            }
+            return typeName;
+        }
+
         public DataProperty(string name, string type)
         {
             Name = name;
@@ -39,7 +52,7 @@ namespace Model
         public DataProperty(PropertyInfo property)
         {
             Name = property.Name;
-            OwnType = property.PropertyType.Name;
+            OwnType = GetTypeName(property.PropertyType);
         }
     }
 }

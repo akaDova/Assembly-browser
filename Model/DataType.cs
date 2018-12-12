@@ -33,11 +33,25 @@ namespace Model
 
         }
 
+        private string GetTypeName(Type type)
+        {
+            string typeName = type.Name;
+            if (type.IsGenericType)
+            {
+                List<string> args = (from arg in type.GetGenericArguments()
+                                     select arg.Name).ToList();
+                typeName = $"{typeName}<{string.Join(",", args)}>";
+
+            }
+            return typeName;
+        }
+
         public DataType(Type type)
         {
-            Name = type.Name;
+            Name = GetTypeName(type);
             TypeInfo typeInfo = type.GetTypeInfo();
             //FieldInfo[] fieldsInfo = typeInfo.DeclaredFields;
+           
 
             fields = (
                 from field in typeInfo.DeclaredFields

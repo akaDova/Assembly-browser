@@ -26,7 +26,18 @@ namespace Model
             get;
         }
 
-        
+        private string GetTypeName(Type type)
+        {
+            string typeName = type.Name;
+            if (type.IsGenericType)
+            {
+                List<string> args = (from arg in type.GetGenericArguments()
+                                     select arg.Name).ToList();
+                typeName = $"{typeName}<{string.Join(",", args)}>";
+
+            }
+            return typeName;
+        }
 
         public IEnumerable<IData> Nodes => null;
 
@@ -44,16 +55,30 @@ namespace Model
         public DataMethod(MethodInfo method)
         {
             List<ParameterInfo> parameters = method.GetParameters().ToList();
-
+            string genericArgs = "";
             List<string> signature = (
                 from parameter in parameters
-                select (parameter.ParameterType.Name, parameter.Name) into paramSignature
+                select (GetTypeName(parameter.ParameterType), parameter.Name) into paramSignature
                 select $"{paramSignature.Item1} {paramSignature.Item2}" into paramSignatureText
                 select paramSignatureText
              ).ToList();
 
+            if (method.IsGenericMethodDefinition)
+            {
+                List<string> args = (from arg in method.GetGenericArguments()
+                 select arg.Name).ToList();
+                genericArgs = $"<{string.Join(",", args)}>";
+                
+            }
+            //else if (method.IsGenericMethod)
+            //{
+            //    List<string> args = (from arg in method.GetGenericArguments()
+            //                         select arg.Name).ToList();
+            //    genericArgs = $"<{string.Join(",", args)}>";
+            //}
+                
             OwnType = $"({string.Join(", ", signature)}) => {method.ReturnType.Name}";
-            ItemName = $"{method.ReturnType.Name} {method.Name}({string.Join(",", signature)})";
+            ItemName = $"{method.ReturnType.Name} {method.Name}{genericArgs}({string.Join(",", signature)})";
 
             Name = method.Name;
 

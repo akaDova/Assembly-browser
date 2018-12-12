@@ -30,16 +30,23 @@ namespace Model
 
         }
 
-        public DataField(string name, string type)
+        private string GetTypeName(Type type)
         {
-            Name = name;
-            OwnType = type;
+            string typeName = type.Name;
+            if (type.IsGenericType)
+            {
+                List<string> args = (from arg in type.GetGenericArguments()
+                                     select arg.Name).ToList();
+                typeName = $"{typeName}<{string.Join(",", args)}>";
+
+            }
+            return typeName;
         }
 
-        public DataField(FieldInfo field) : this(field.Name, field.FieldType.Name)
+        public DataField(FieldInfo field)
         {
             Name = field.Name;
-            OwnType = field.FieldType.Name;
+            OwnType = GetTypeName(field.FieldType);
             
         }
     }
