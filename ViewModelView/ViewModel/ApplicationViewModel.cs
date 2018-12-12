@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Model;
+using Microsoft.Win32;
+using System.Windows;
 
 namespace ViewModelView.ViewModel
 {
@@ -45,11 +48,16 @@ namespace ViewModelView.ViewModel
                       {
                           if (openFileService.OpenFile() == true)
                           {
+
                               assemblyPath = openFileService.FilePath;
                               Data = new ObservableCollection<IHierarchicalData>();
                               Data.Add(assemblyData.GetData(assemblyPath));
                               OnPropertyChanged("Data");
                           }
+                      }
+                      catch (FileLoadException ex)
+                      {
+                          MessageBox.Show("Уважаемый, Loaded file is not an assembly", "Error", MessageBoxButton.OK, MessageBoxImage.Error);                       
                       }
                       catch (Exception ex)
                       {

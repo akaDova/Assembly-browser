@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class DataMethod : ITyped, IData
+    public class DataMethod : DataMember, ITyped, IData
     {
         public string Name
         {
@@ -26,18 +26,18 @@ namespace Model
             get;
         }
 
-        private string GetTypeName(Type type)
-        {
-            string typeName = type.Name;
-            if (type.IsGenericType)
-            {
-                List<string> args = (from arg in type.GetGenericArguments()
-                                     select arg.Name).ToList();
-                typeName = $"{typeName}<{string.Join(",", args)}>";
+        //private string GetTypeName(Type type)
+        //{
+        //    string typeName = type.Name;
+        //    if (type.IsGenericType)
+        //    {
+        //        List<string> args = (from arg in type.GetGenericArguments()
+        //                             select GetTypeName(arg)).ToList();
+        //        typeName = $"{typeName}<{string.Join(",", args)}>";
 
-            }
-            return typeName;
-        }
+        //    }
+        //    return typeName;
+        //}
 
         public IEnumerable<IData> Nodes => null;
 
@@ -63,10 +63,10 @@ namespace Model
                 select paramSignatureText
              ).ToList();
 
-            if (method.IsGenericMethodDefinition)
+            if (method.IsGenericMethod)
             {
                 List<string> args = (from arg in method.GetGenericArguments()
-                 select arg.Name).ToList();
+                 select GetTypeName(arg)).ToList();
                 genericArgs = $"<{string.Join(",", args)}>";
                 
             }
@@ -77,8 +77,8 @@ namespace Model
             //    genericArgs = $"<{string.Join(",", args)}>";
             //}
                 
-            OwnType = $"({string.Join(", ", signature)}) => {method.ReturnType.Name}";
-            ItemName = $"{method.ReturnType.Name} {method.Name}{genericArgs}({string.Join(",", signature)})";
+            OwnType = $"({string.Join(", ", signature)}) => {GetTypeName(method.ReturnType)}";
+            ItemName = $"{GetTypeName(method.ReturnType)} {method.Name}{genericArgs}({string.Join(",", signature)})";
 
             Name = method.Name;
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class DataField : ITyped, IData
+    public class DataField : DataMember, ITyped, IData
     {
         public string Name
         {
@@ -30,18 +30,18 @@ namespace Model
 
         }
 
-        private string GetTypeName(Type type)
-        {
-            string typeName = type.Name;
-            if (type.IsGenericType)
-            {
-                List<string> args = (from arg in type.GetGenericArguments()
-                                     select arg.Name).ToList();
-                typeName = $"{typeName}<{string.Join(",", args)}>";
+        //private string GetTypeName(Type type)
+        //{
+        //    string typeName = type.Name;
+        //    if (type.IsGenericType)
+        //    {
+        //        List<string> args = (from arg in type.GetGenericArguments()
+        //                             select GetTypeName(arg)).ToList();
+        //        typeName = $"{typeName}<{string.Join(",", args)}>";
 
-            }
-            return typeName;
-        }
+        //    }
+        //    return typeName;
+        //}
 
         public DataField(FieldInfo field)
         {

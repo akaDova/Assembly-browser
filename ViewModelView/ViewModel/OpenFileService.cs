@@ -18,6 +18,7 @@ namespace ViewModelView.ViewModel
         public bool OpenFile()
         {
             OpenFileDialog openfileDialog = new OpenFileDialog();
+            openfileDialog.Filter = "Assemblies (*.dll;*.exe)|*.dll;*.exe;";
             if (openfileDialog.ShowDialog() == true)
             {
                 FilePath = openfileDialog.FileName;

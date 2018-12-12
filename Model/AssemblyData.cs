@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace Model
 {
@@ -57,15 +58,26 @@ namespace Model
         {
             try
             {
+                
                 Assembly assembly = Assembly.LoadFrom(path);
-                types = assembly.GetTypes().ToList();
-                Name = assembly.FullName;
+                List<TypeInfo> types = assembly.DefinedTypes.ToList();
+                Name = assembly.GetName().Name;
                 namespaces = (
                     from type in types
                     group type by type.Namespace into namespces
+                    where !(namespces.Key is null)
                     select (namespces.Key, namespces.ToList()) into namespc
                     select new DataNamespace(namespc.Item1, namespc.Item2)
                 ).ToList();
+            }
+            catch (BadImageFormatException ex)
+            {
+                throw new FileLoadException();
+            }
+            catch (FileLoadException ex)
+            {
+                throw new FileLoadException();
+
             }
             catch (Exception ex)
             {

@@ -14,6 +14,6 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        <Button Command="{Binding OpenCommand}" Content="Button" HorizontalAlignment="Left" Margin="614,67,0,0" VerticalAlignment="Top" Width="92" Height="29"/>
+        <Button Command="{Binding OpenCommand}" Content="Open" HorizontalAlignment="Left" Margin="614,67,0,0" VerticalAlignment="Top" Width="92" Height="29"/>
     </Grid>
 </Window>

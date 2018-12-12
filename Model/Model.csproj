@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyData.cs" />
+    <Compile Include="DataMember.cs" />
     <Compile Include="DataField.cs" />
     <Compile Include="DataMethod.cs" />
     <Compile Include="DataNamespace.cs" />

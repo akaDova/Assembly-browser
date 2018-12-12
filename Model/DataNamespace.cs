@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,8 +37,20 @@ namespace Model
 
         }
 
-        
+        public DataNamespace(string name, List<TypeInfo> types)
+        {
+            Name = name;
 
-        
+            this.types = (
+                from type in types
+                select new DataType(type) into dataType
+                select dataType
+            ).ToList();
+
+        }
+
+
+
+
     }
 }
