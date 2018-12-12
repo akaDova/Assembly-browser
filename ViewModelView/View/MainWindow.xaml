@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TreeView x:Name="treeViewData" Margin="0,0,278.6,0">
+        <TreeView x:Name="treeViewData" Margin="0,0,278.6,0" ItemsSource="{Binding Data}">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
-                    <TextBlock Text="{Binding Name}"></TextBlock>
+                    <TextBlock Text="{Binding ItemName}"></TextBlock>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="614,67,0,0" VerticalAlignment="Top" Width="92" Height="29"/>
+        <Button Command="{Binding OpenCommand}" Content="Button" HorizontalAlignment="Left" Margin="614,67,0,0" VerticalAlignment="Top" Width="92" Height="29"/>
     </Grid>
 </Window>

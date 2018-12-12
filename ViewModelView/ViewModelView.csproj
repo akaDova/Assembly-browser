@@ -64,6 +64,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\ApplicationViewModel.cs" />
+    <Compile Include="ViewModel\IFileDialogService.cs" />
+    <Compile Include="ViewModel\OpenFileService.cs" />
+    <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

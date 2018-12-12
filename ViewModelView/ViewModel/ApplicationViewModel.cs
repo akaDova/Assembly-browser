@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Model;
@@ -14,13 +16,62 @@ namespace ViewModelView.ViewModel
 
         private AssemblyData assemblyData = new AssemblyData();
 
-        IHierarchicalData data;
+        OpenFileService openFileService = new OpenFileService();
+        
+        ObservableCollection<IHierarchicalData> data;
+
+        public ObservableCollection<IHierarchicalData> Data
+        {
+            get => data;
+            set
+            {
+                data = value;
+                //OnPropertyChanged("Data");
+            }
+        }
 
         string assemblyPath;
+        
+        RelayCommand openCommand;
+
+        public RelayCommand OpenCommand
+        {
+            get
+            {
+                return openCommand ??
+                  (openCommand = new RelayCommand(obj =>
+                  {
+                      try
+                      {
+                          if (openFileService.OpenFile() == true)
+                          {
+                              assemblyPath = openFileService.FilePath;
+                              Data = new ObservableCollection<IHierarchicalData>();
+                              Data.Add(assemblyData.GetData(assemblyPath));
+                              OnPropertyChanged("Data");
+                          }
+                      }
+                      catch (Exception ex)
+                      {
+                          
+                      }
+                  }));
+            }
+        }
+
+
 
         public ApplicationViewModel()
         {
 
+        }
+
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
         }
 
     }

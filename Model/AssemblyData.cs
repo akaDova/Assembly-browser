@@ -57,7 +57,7 @@ namespace Model
         {
             try
             {
-                Assembly assembly = Assembly.LoadFile(path);
+                Assembly assembly = Assembly.LoadFrom(path);
                 types = assembly.GetTypes().ToList();
                 Name = assembly.FullName;
                 namespaces = (
@@ -67,7 +67,7 @@ namespace Model
                     select new DataNamespace(namespc.Item1, namespc.Item2)
                 ).ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 
                 namespaces = new List<DataNamespace>();

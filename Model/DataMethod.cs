@@ -23,7 +23,7 @@ namespace Model
 
         public string ItemName
         {
-            get => $"{OwnType} {Name}";
+            get;
         }
 
         
@@ -53,6 +53,7 @@ namespace Model
              ).ToList();
 
             OwnType = $"({string.Join(", ", signature)}) => {method.ReturnType.Name}";
+            ItemName = $"{method.ReturnType.Name} {method.Name}({string.Join(",", signature)})";
 
             Name = method.Name;
 
