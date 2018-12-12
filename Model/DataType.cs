@@ -14,9 +14,9 @@ namespace Model
             get;
         }
 
-        public  List<DataField> fields;
-        public  List<DataProperty> properties;
-        public  List<DataMethod> methods;
+        private List<DataField> fields;
+        private List<DataProperty> properties;
+        private List<DataMethod> methods;
 
         public string ItemName
         {

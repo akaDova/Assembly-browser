@@ -8,14 +8,14 @@ namespace UnitTest
 {
     class UTestClass
     {
-        int number;
-        int NumberPlusFive
+        public int number = 5;
+        public int NumberPlusFive
         {
             get => number + 5;
             set => number = value;
         }
 
-        void DoNothing()
+        public void DoNothing()
         {
 
         }
