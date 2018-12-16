@@ -46,7 +46,7 @@ namespace ViewModelView.ViewModel
                   {
                       try
                       {
-                          if (openFileService.OpenFile() == true)
+                          if (openFileService.OpenFile())
                           {
 
                               assemblyPath = openFileService.FilePath;
@@ -57,7 +57,7 @@ namespace ViewModelView.ViewModel
                       }
                       catch (FileLoadException ex)
                       {
-                          MessageBox.Show("Уважаемый, Loaded file is not an assembly", "Error", MessageBoxButton.OK, MessageBoxImage.Error);                       
+                          MessageBox.Show("Уважаемый, выбранный файл не является сборкой", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);                       
                       }
                       catch (Exception ex)
                       {

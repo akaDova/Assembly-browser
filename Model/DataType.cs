@@ -14,9 +14,9 @@ namespace Model
             get;
         }
 
-        private List<DataField> fields;
-        private List<DataProperty> properties;
-        private List<DataMethod> methods;
+        private IEnumerable<IData> fields;
+        private IEnumerable<IData> properties;
+        private IEnumerable<IData> methods;
 
         public string ItemName
         {
@@ -33,19 +33,6 @@ namespace Model
 
         }
 
-        //private string GetTypeName(Type type)
-        //{
-        //    string typeName = type.Name;
-        //    if (type.IsGenericType)
-        //    {
-        //        List<string> args = (from arg in type.GetGenericArguments()
-        //                             select GetTypeName(arg)).ToList();
-        //        typeName = $"{typeName}<{string.Join(",", args)}>";
-
-        //    }
-        //    return typeName;
-        //}
-
         public DataType(Type type)
         {
             Name = GetTypeName(type);
@@ -57,25 +44,23 @@ namespace Model
                 from field in typeInfo.DeclaredFields
                 select new DataField(field) into dataField
                 select dataField
-            ).ToList();
+            );
 
 
             properties = (
                 from property in typeInfo.DeclaredProperties
                 select new DataProperty(property) into dataProperty
                 select dataProperty
-            ).ToList();
+            );
 
             methods = (
                  from method in typeInfo.DeclaredMethods
                  select new DataMethod(method) into dataMethod
                  select dataMethod
-             ).ToList();
+             );
 
-            Nodes = ((IEnumerable<IData>)fields).Concat(properties)
+            Nodes = fields.Concat(properties)
                           .Concat(methods);
-                
-                
         }
     }
 }

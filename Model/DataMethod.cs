@@ -26,19 +26,6 @@ namespace Model
             get;
         }
 
-        //private string GetTypeName(Type type)
-        //{
-        //    string typeName = type.Name;
-        //    if (type.IsGenericType)
-        //    {
-        //        List<string> args = (from arg in type.GetGenericArguments()
-        //                             select GetTypeName(arg)).ToList();
-        //        typeName = $"{typeName}<{string.Join(",", args)}>";
-
-        //    }
-        //    return typeName;
-        //}
-
         public IEnumerable<IData> Nodes => null;
 
         public DataMethod()
@@ -70,12 +57,6 @@ namespace Model
                 genericArgs = $"<{string.Join(",", args)}>";
                 
             }
-            //else if (method.IsGenericMethod)
-            //{
-            //    List<string> args = (from arg in method.GetGenericArguments()
-            //                         select arg.Name).ToList();
-            //    genericArgs = $"<{string.Join(",", args)}>";
-            //}
                 
             OwnType = $"({string.Join(", ", signature)}) => {GetTypeName(method.ReturnType)}";
             ItemName = $"{GetTypeName(method.ReturnType)} {method.Name}{genericArgs}({string.Join(",", signature)})";

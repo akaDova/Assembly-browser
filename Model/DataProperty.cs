@@ -20,7 +20,7 @@ namespace Model
 
         public string ItemName
         {
-            get => $"{OwnType} {Name}";
+            get => $"property {OwnType} {Name}";
         }
 
         public IEnumerable<IData> Nodes => null;
@@ -29,19 +29,6 @@ namespace Model
         {
 
         }
-
-        //private string GetTypeName(Type type)
-        //{
-        //    string typeName = type.Name;
-        //    if (type.IsGenericType)
-        //    {
-        //        List<string> args = (from arg in type.GetGenericArguments()
-        //                             select GetTypeName(arg)).ToList();
-        //        typeName = $"{typeName}<{string.Join(",", args)}>";
-
-        //    }
-        //    return typeName;
-        //}
 
         public DataProperty(string name, string type)
         {
